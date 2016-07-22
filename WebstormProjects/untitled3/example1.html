@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function Merge(cartItems)
+        {
+            let result=[];
+            for(let i=0;i<cartItems.length;i++)
+            {
+                let existItem=result.find(function(item){
+                    return item.barcode===cartItems[i].barcode;
+                });
+                if(existItem){
+                    existItem.count++;
+                }else{
+                    result.push(Object.assign({},cartItems[i],{
+                        count:1
+                    }));
+
+                }
+
+            }
+            return result;
+
+        }
+        let cartItems=[
+            {
+                barcode:"Item001",
+                name:"可口",
+                unit:"瓶",
+                price:3.00
+            },
+            {
+                barcode:"Item001",
+                name:"可口",
+                unit:"瓶",
+                price:3.00
+            },
+            {
+                barcode:"Item002",
+                name:"百事",
+                unit:"瓶",
+                price:5.00
+            },
+            {
+                barcode:"Item003",
+                name:"雪碧",
+                unit:"瓶",
+                price:6.00
+
+            }
+        ];
+        console.log(Merge(cartItems));
+
+       function countSubtotal(mergeItem)
+       {
+           let subtotal=[];
+           let result=[];
+           for(let i=0;i<mergeItem.length;i++)
+           {
+               subtotal[i]=mergeItem[i].count*(mergeItem[i].price);
+               result.push(Object.assign({},mergeItem[i],{subtotal: subtotal[i]}));
+           }
+           return result;
+       }
+       console.log( countSubtotal(Merge(cartItems)) );
+
+        function countSum(countItem)
+        {
+            let Receipt;
+            let total=0;
+
+            for(let i=0;i<countItem.length;i++)
+            {
+                total+=countItem[i].subtotal;
+
+            }
+
+            Receipt={detailedCartItems:countItem,total:total};
+
+            return Receipt;
+
+        }
+        console.log( countSum(countSubtotal(Merge(cartItems)) ));
+
+        function print(printReceipt)
+        {
+           for(let i=0;i<printReceipt.detailedCartItems.length;i++)
+           {
+               console.log('名称: '+printReceipt.detailedCartItems[i].name+' 数量:'+printReceipt.detailedCartItems[i].count+
+                       ' 单价: '+printReceipt.detailedCartItems[i].price+'');
+
+
+           }
+            console.log('-------------');
+            console.log("总计："+printReceipt.total);
+        }
+
+        print(countSum(countSubtotal(Merge(cartItems)) ));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

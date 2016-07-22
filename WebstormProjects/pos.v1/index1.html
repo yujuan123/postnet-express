@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pos.v1</title>
+    <script src="index.js"></script>
+    <script>
+       let barcodesArray =[
+           'ITEM000001',
+           'ITEM000001',
+           'ITEM000001',
+           'ITEM000001',
+           'ITEM000001',
+           'ITEM000003-2',
+           'ITEM000003-2',
+           'ITEM000003-2.5',
+           'ITEM000003-1.5',
+           'ITEM000005',
+           'ITEM000005',
+           'ITEM000005'
+       ];
+        function  merge(barcodesArray) {
+            let barcodesItem=[];
+            let amount;//数量用 amount
+            for(let i=0;i<barcodesArray.length;i++)
+            {
+                let tempArray=barcodesArray[i].toString().split("-");
+                let existItem=barcodesItem.find(function (item){
+                    return item.barcode === tempArray[0];
+                });
+                if(tempArray.length<2){
+                    if(existItem){
+                        existItem.amount++;
+                    }
+                    else{
+                        barcodesItem.push(Object.assign({},{barcode:tempArray[0]},{amount:1}));
+                    }
+                }
+
+                else{
+
+                   if(existItem){
+                       existItem.amount+=parseFloat(tempArray[1]);
+                       console.log(existItem.amount);
+                   }
+                   else {
+                       barcodesItem.push(Object.assign({}, {barcode: tempArray[0]}, {amount: parseFloat(tempArray[1])}));
+                   }
+
+
+                }
+
+            }
+            return barcodesItem;
+        }
+        console.log(merge(barcodesArray));
+
+        function getCartItems(allItems,barcodesItem)
+        {
+            let cartItems=barcodesItem;
+            for(let i=0;i<allItems.length;i++)
+            {
+                let existItems=cartItems.find(function (item) {
+                    return item.barcode===allItems[i].barcode;
+                        }
+
+                )
+                if(existItems){
+
+                }
+            }
+
+        }
+        console.log(getCartItems(loadAllItems(),merge(barcodesArray)));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

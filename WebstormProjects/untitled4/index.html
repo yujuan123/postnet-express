@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        let tags=['ITEM000001',
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000003-2',
+            'ITEM000003-2',
+            'ITEM000003-1.5',
+            'ITEM000003-1.5',
+            'ITEM000005',
+            'ITEM000005',
+            'ITEM000005'];
+        function parseTags(tags)
+        {
+           let barcodesItem=[];
+            let amount;
+            for(let i=0;i<tags.length;i++)
+            {
+                let tempArray=tags[i].toString().split("-");
+
+                let existItems=barcodesItem.find(function (item) {
+                   return  item.barcode===tempArray[0];
+                });
+                if(tempArray.length<2)
+                {
+                    if(existItems)
+                    {
+                        existItems.amount++;
+                    }
+                    else
+                    {
+                        barcodesItem.push(Object.assign({},{barcode:tempArray[0]},{amount:1}));
+                    }
+                }
+                else
+                {
+                    if(existItems)
+                    {
+                        existItems.amount+=parseFloat(tempArray[1]);
+
+                    }
+                    else
+                    {
+                        barcodesItem.push(Object.assign({},{barcode:tempArray[0]},{amount:parseFloat(tempArray[1])}));
+                    }
+                }
+            }
+            return barcodesItem;
+        }
+        console.log(parseTags(tags));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

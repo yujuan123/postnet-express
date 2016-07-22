@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>求100以内的奇数内的</title>
+
+    <script>
+        let start=1;
+        let end=100;
+        let k=0;
+        let Odd=[];
+        function printfSum(start,end){
+
+            for(let i=start;i<=end;i++)
+            {
+                if(i%2){
+                    Odd[k++]=i;
+                }
+            }
+
+        }
+
+
+        function squareNumber(){
+            let squareOdd=[];
+
+            for(let i=0;i<Odd.length;i++){
+                squareOdd[i]=Odd[i]*Odd[i];
+            }
+            return squareOdd;
+        }
+        console.log(squareNumber(Odd));
+
+        function addUp(squareOdd){
+            let sumOdd=0;
+            for(let i=0;i<squareOdd.length;i++)
+            {
+                sumOdd+=squareOdd[i];
+            }
+            return sumOdd;
+        }
+        console.log(addUp(squareNumber(printfSum(start,end))));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

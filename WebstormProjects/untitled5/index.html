@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        let tags =[
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000003-2',
+            'ITEM000003-2',
+            'ITEM000003-3.5',
+            'ITEM000003-1.5',
+            'ITEM000005',
+            'ITEM000005',
+            'ITEM000005'
+        ];
+
+        function formatTags(tags)
+        {
+           return tags.map(function (tag){
+               let temp=tag.split("-");
+               return {barcode:temp[0],amount:parseFloat(temp[1])||1};
+           }
+
+           );
+        }
+        console.log(formatTags(tags));
+
+        function mergeBarcodes(barcodes)
+        {
+
+            let mergeBarcodes=[];
+            for(let i=0;i<barcodes.length;i++)
+            {
+                let item=mergeBarcodes.find(function (it) {
+                    return it.barcode===barcodes[i].barcode;
+                }
+
+                );
+                if(item)
+                {
+                    item.amount+=barcodes[i].amount;
+                }
+                else {
+                    mergeBarcodes.push(Object.assign({},{barcode:barcodes[i].barcode},{amount:barcodes[i].amount}));
+                }
+            }
+            return mergeBarcodes;
+        }
+
+        console.log(mergeBarcodes(formatTags(tags)))
+
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
